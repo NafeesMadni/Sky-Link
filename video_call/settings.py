@@ -13,8 +13,9 @@ SECRET_KEY = 'django-insecure-h5%4s@_oh8*2km)vosl8w50%vfhd*ag#aka$!mear^tp)9m7&9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'authentication.CustomUser'
 
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -25,9 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tailwind',
-    'theme',
+    'authentication',
     'core',
+    'theme',
+    'tailwind',
+    
     'django_browser_reload',
 ]
 
@@ -115,6 +118,12 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ['127.0.0.1']
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"  # For Windows
+
+LOGIN_URL = '/login/' 
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
