@@ -1,0 +1,110 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class=" items-center justify-center flex">
+    <!-- Form section -->
+    <div class="justify-center items-center flex">
+        <div class="bg-white shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Profile Picture Section -->
+                    <div class="flex flex-col items-center mb-6">
+                        <div class="relative">
+                            <img id="profile-pic" src="{{ user.dp.url }}" alt="Profile picture" class="w-32 h-32 rounded-full object-cover border-2 border-gray-200">
+                            
+                            <label for="dp" class="absolute bottom-0 right-0 bg-indigo-600 rounded-full p-2 cursor-pointer hover:bg-indigo-700 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                                </svg>
+                                <input type="file" id="dp" name="dp" class="hidden" accept="image/*" onchange="previewImage(event)">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Fields -->
+                    <div class="space-y-2">
+                        <!-- Username -->
+                            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <input type="text" name="username" id="username" value="{{ user.username }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    
+                        <!-- Nickname -->
+                        <div>
+                            <label for="nickname" class="block text-sm font-medium text-gray-700">Nickname</label>
+                            <input type="text" name="nickname" id="nickname" value="{{ user.nickname }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" name="email" id="email" value="{{ user.email }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-5 space-x-2 ">
+                        <!-- Cancel Changes Button -->
+                        <a href="." class="inline-flex justify-center py-1 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Cancel
+                        </a>
+                        <!-- Save Changes Button -->
+                        <button type="submit" class="inline-flex justify-center py-1 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save
+                        </button>
+                    </div>
+                </form>
+                <!-- Delete Account Section -->
+                {% if not user.is_superuser %}
+                
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <div class="flex items-center justify-between space-x-5">
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Delete Account</h4>
+                                <p class="text-sm text-gray-500">Permanently delete your account and all associated data.</p>
+                            </div>
+                            <a href="{% url 'authentication:delete_acc' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                Delete Account
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Profile picture preview
+    document.getElementById('profile-upload').addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('img').setAttribute('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+
+
+    function previewImage(event) {
+        const input = event.target;
+        const file = input.files[0];
+        const img = document.getElementById('profile-pic');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result; // Set the img src to the uploaded image
+            }
+            reader.readAsDataURL(file); // Read the uploaded file as a data URL
+        }
+    }
+</script>
+
+{% endblock %}

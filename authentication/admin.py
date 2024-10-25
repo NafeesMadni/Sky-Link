@@ -3,14 +3,15 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import RegisterForm
 from .models import CustomUser
 
+
 class CustomUserAdmin(UserAdmin):
     add_form = RegisterForm
     model = CustomUser
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    list_display = ('username', 'email', 'is_staff', 'is_active', 'dp', 'acc_created')
     list_filter = ('is_staff', 'is_active', 'is_superuser', 'groups')
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name')}),
+        ('Personal Info', {'fields': ('first_name', 'last_name', 'dp', 'nickname', 'bio')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
@@ -22,6 +23,5 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('email',)
-
 
 admin.site.register(CustomUser, CustomUserAdmin)
