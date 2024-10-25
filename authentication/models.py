@@ -7,7 +7,6 @@ def get_default_image_path():
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True,)
-    bio = models.TextField(null=True, blank=True)
     dp = models.ImageField(upload_to='user_dp/', default=get_default_image_path,)
     nickname = models.CharField(default='James Doe', max_length=15)
     acc_created = models.DateTimeField(auto_now_add=True, blank=True, null=True)

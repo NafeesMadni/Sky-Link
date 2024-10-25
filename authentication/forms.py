@@ -39,7 +39,7 @@ class ProfileForm(forms.ModelForm):
      
      def save(self, commit=True):
           user = super(ProfileForm, self).save(commit=False)
-          user.bio = self.cleaned_data['bio']
+          
           user.username = self.cleaned_data['username']
           user.dp = self.cleaned_data['dp']
           user.email = self.cleaned_data['email']
@@ -52,4 +52,4 @@ class ProfileForm(forms.ModelForm):
 
      class Meta:
           model = CustomUser
-          fields = ['bio', 'dp', 'nickname', 'username', 'email']
+          fields = ['dp', 'nickname', 'username', 'email']

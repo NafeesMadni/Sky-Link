@@ -1,0 +1,46 @@
+{% extends 'core/layout.html' %}
+
+{% block title %}Join Meeting{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+<div class="max-w-md w-full space-y-8">
+     <div>
+          <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+               Join Meeting
+          </h2>
+          <p class="mt-2 text-center text-sm text-gray-600">
+               Enter the meeting ID to connect
+          </p>
+     </div>
+     <form class="mt-8 space-y-6" action="{% url 'join' %}" method="POST">
+          {% csrf_token %}
+          <div class="rounded-md shadow-sm -space-y-px">
+               <div>
+                    <label for="roomID" class="sr-only">Meeting ID</label>
+                    <input id="roomID" name="roomID" type="text" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter Meeting ID"autocomplete="off">
+               </div>
+          </div>
+
+          <div>
+               <button type="submit" 
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <!-- Heroicon name: solid/login -->
+                    <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" 
+                         xmlns="http://www.w3.org/2000/svg" 
+                         viewBox="0 0 20 20" 
+                         fill="currentColor" 
+                         aria-hidden="true">
+                         <path fill-rule="evenodd" 
+                              d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" 
+                              clip-rule="evenodd" />
+                    </svg>
+                    </span>
+                    Join Meeting
+               </button>
+          </div>
+     </form>
+</div>
+</div>
+{% endblock %}

@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from authentication.models import CustomUser
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -9,3 +11,15 @@ def contact(request):
 
 def about(request):
      return render(request, 'core/about.html')
+
+@login_required
+def meeting(request):
+     user = request.user
+     return render(request, 'core/room.html', {'name': user.nickname})
+
+@login_required
+def join(request):
+     if request.method == 'POST':
+          link = request.POST['roomID']
+          return redirect(link)
+     return render(request, 'core/join.html')
