@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'theme',
     'tailwind',
     
-    # 'django_browser_reload',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    # "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'video_call.urls'
